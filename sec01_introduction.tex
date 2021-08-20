@@ -1,0 +1,28 @@
+\section{Introduction}
+Language modeling task consists in predicting the probability of the next word.
+It is a crucial component in real-world applications such as Machine Translation 
+and Automatic Speech Recognition. For example, a translation system generates multiple 
+translations for the same sentence and the language model scores all the sentences 
+and decides the most likely one.
+
+More formally, Language Models assign a probability to a sequence of words: 
+given a text corpus with a vocabulary $V$ and a sequence of words $w_1,w_2, \dots, w_{t-1}$, 
+we need to compute the probability distribution of the next word $w_t$ \cite{LM_definition}:
+\begin{equation}
+    P(w_{t} | w_1, w_2, \dots, w_{t-1})
+\end{equation}
+where $w_t$ can be any word in the vocabulary $V$.
+Language models can operate at different levels: character level, n-gram level, 
+sentence level or paragraph level.
+
+A recurrent neural network (RNN) is a type of artificial neural network that 
+operates on sequences of data of variable length. In the case of RNN, the output 
+from the previous step is fed as input to the current step. This is particularly 
+useful in applications where there is the need to remember the previous state.
+
+Recurrent Neural Net Language Model (RNNLM) is a type of neural network language 
+model that exploits a RNN cell. There are several different types of RNN cells, % TODO: reference
+but we will focus on Long-Short Term Memory \cite{LSTM} and Gated Recurrent Unit 
+\cite{GRU} cells. Since a RNN can deal with the variable length data, it is 
+suitable for modeling data such as sentences in natural language.
+
