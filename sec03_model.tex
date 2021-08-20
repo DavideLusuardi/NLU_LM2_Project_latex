@@ -1,4 +1,10 @@
 
+\begin{figure*}[t]
+\centerline{\includegraphics[scale=0.5]{LSTM.PNG}}
+\caption{Long-Short Term Memory cell structure and related equations.} % TODO: reference
+\label{fig:lstm}
+\end{figure*}
+
 \section{Model implementation details}
 
 In this section, we explain some implementation details of the designed 
@@ -6,19 +12,30 @@ RNN Language Model. The model is composed of an Embedding layer, a RNN cell
 and a Fully-Connected layer. The model supports two main types of RNN cell: 
 LSTM and GRU. A simple version of these cells has been implemented.
 
+The embedding layer is required in order to represent individual words as
+real-valued vectors in a predefined embedding space. Each word is mapped 
+to one vector and the vector values are learned: words that have 
+the same meaning should have a similar representation.
+
+The dropout regularization technique \cite{dropout} has been applied in order
+to obtain better generalization performance without overfitting too much the
+training set.
+
+A common problem of Recurrent Neural Networks is the \textit{"exploding gradients"} 
+due to their instability during training.
+A possible easy solution is to apply gradient clipping \cite{clip}: the idea is to
+rescale the gradient to keep it small when it gets too large.
+This helps gradient descent to have a better behaviour.
+
 \subsection{LSTM cell}
 
-\begin{figure*}[htbp]
-\centerline{\includegraphics[scale=0.5]{LSTM.PNG}}
-\caption{Long-Short Term Memory cell structure and related equations.} % TODO: reference
-\label{fig:lstm}
-\end{figure*}
 
 The structure of the Long-Short Term Memory cell is shown in Figure \ref{fig:lstm}
 and consists of three main gates:
 
 \begin{enumerate}
-    \item The \textit{input gate} decides how much input information is added to the current state and is caracterized by the following Equation:
+    \item The \textit{input gate} decides how much input information is 
+    added to the current state and is caracterized by the following Equation:
         \begin{equation}
             i_t = \sigma \left(
                 W_i
@@ -30,7 +47,8 @@ and consists of three main gates:
             \right)
         \end{equation}
     
-    \item The \textit{forget gate} decides how much of the past should be remembered and is caracterized by the following Equation:
+    \item The \textit{forget gate} decides how much of the past should 
+    be remembered and is caracterized by the following Equation:
         \begin{equation}
             f_t = \sigma \left(
                 W_f
@@ -76,6 +94,9 @@ The new hidden state $h_t$ is computed as follows:
     h_t = o_t \odot tanh(c_t) .
 \end{equation}
 
+The weights $W_i, W_f, W_o, W_g$ are initialized as proposed by Xavier et al. 
+\cite{Xavier} and biases $b_i, b_f, b_o$ are initially filled by zero \cite{init}.
+Both weights and biases are learned during the training process.
 
 
 
@@ -83,7 +104,7 @@ The new hidden state $h_t$ is computed as follows:
 
 \subsection{GRU cell}
 
-\begin{figure}[htbp]
+\begin{figure}[hb]
 \centerline{\includegraphics[scale=0.25]{GRU_crop.PNG}}
 \caption{Gated Recurrent Unit cell structure.} % TODO: reference
 \label{fig:gru}
@@ -134,3 +155,8 @@ Finally, the new hidden state $h_t$ is computed as follows:
 \begin{equation}
     h_t = (1-z_t) \odot h_{t-1} + z_t \odot h_t'
 \end{equation}
+
+
+The weights $W_i, W_f, W_o, W_g$ are initialized as proposed by Xavier et al. 
+\cite{Xavier} and biases $b_i, b_f, b_o$ are initially filled by zero.
+Both weights and biases are learned during the training process.

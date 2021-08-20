@@ -1,2 +1,2 @@
-# Assignment1
+# NLU Project
 NLU Language Model project report

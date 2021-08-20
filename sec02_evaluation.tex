@@ -27,4 +27,13 @@ which consists of 929k training words, 73k validation words, and 82k test
 words and a vocabulary composed of 10k words. The material annotated includes 
 IBM computer manuals, nursing notes, Wall Street Journal articles, and 
 transcribed telephone conversations. The dataset is available from the website 
-\textit{deepai.org} \cite{PTB_download}.
+\textit{deepai.org} \cite{PTB_download} and is already splitted in three files
+that correspond to train, validation and test dataset.
+
+The end-of-string token (\texttt{<eos>}) has been appended to all sentences in 
+order to define its end and the unknown token (\texttt{<unk>}) replaces 
+every unknown word in the validation and test corpus.
+
+Words of the corpus are encoded as their position in the vocabulary and batches
+of data of shape \texttt{(sequence length, batch size)} are generated and fed to the network, 
+where the sequence length and the batch size are two hyperparameters.
