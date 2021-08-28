@@ -19,7 +19,8 @@ the same meaning should have a similar representation.
 
 The dropout regularization technique \cite{dropout} has been applied in order
 to obtain better generalization performance without overfitting too much the
-training set.
+training set. Dropout has been applied on the outputs of each RNN layer, with
+a different dropout rate for the last layer.
 
 A common problem of Recurrent Neural Networks is the \textit{"exploding gradients"} 
 due to their instability during training.
